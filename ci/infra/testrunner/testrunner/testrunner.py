@@ -6,6 +6,7 @@
 """
 
 import logging
+import os.path
 import sys
 from argparse import REMAINDER, ArgumentParser
 
@@ -203,7 +204,7 @@ def main():
 
     options = parser.parse_args()
     try:
-        conf = BaseConfig(options.yaml_path)
+        conf = BaseConfig(os.path.abspath(options.yaml_path))
         Logger.config_logger(conf, level=options.log_level)
         options.conf = conf
         options.func(options)
