@@ -11,7 +11,7 @@ from argparse import REMAINDER, ArgumentParser
 
 import platforms
 from skuba import Skuba
-from tests import TestDriver
+from test import TestDriver
 from utils import BaseConfig, Logger, Utils
 
 __version__ = "0.0.3"
