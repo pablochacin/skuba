@@ -1,5 +1,6 @@
-from platforms.openstack import Openstack
-from platforms.vmware import VMware
+from testrunner.platforms.openstack import Openstack
+from testrunner.platforms.platform import Platform
+from testrunner.platforms.vmware import VMware
 
 
 def get_platform(conf, platform):

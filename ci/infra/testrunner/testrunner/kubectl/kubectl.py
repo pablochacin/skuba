@@ -1,7 +1,7 @@
-import platforms
+import testrunner.platforms
 
-from skuba.skuba import Skuba
-from utils.utils import (Utils)
+from testrunner.skuba import Skuba
+from testrunner.utils import Utils
 
 
 class Kubectl:

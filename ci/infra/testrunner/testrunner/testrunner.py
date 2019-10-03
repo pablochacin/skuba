@@ -10,10 +10,10 @@ import os.path
 import sys
 from argparse import REMAINDER, ArgumentParser
 
-import platforms
-from skuba import Skuba
-from test import TestDriver
-from utils import BaseConfig, Logger, Utils
+from testrunner.platforms import get_platform
+from testrunner.skuba import Skuba
+from testrunner.test import TestDriver
+from testrunner.utils import BaseConfig, Logger, Utils
 
 __version__ = "0.0.3"
 
@@ -25,7 +25,7 @@ def info(options):
 
 
 def cleanup(options):
-    platforms.get_platform(options.conf, options.platform).cleanup()
+    get_platform(options.conf, options.platform).cleanup()
     Skuba.cleanup(options.conf)
 
 

@@ -4,7 +4,7 @@ import os
 import requests
 from timeout_decorator import timeout
 
-from utils import (step, Utils)
+from testrunner.utils import (step, Utils)
 
 logger = logging.getLogger('testrunner')
 

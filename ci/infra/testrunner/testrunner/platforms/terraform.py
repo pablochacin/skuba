@@ -4,8 +4,8 @@ import os
 
 import hcl
 
-from platforms.platform import Platform
-from utils import (Format, step)
+from testrunner.platforms.platform import Platform
+from testrunner.utils import (Format, step)
 
 logger = logging.getLogger('testrunner')
 

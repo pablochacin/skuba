@@ -2,9 +2,9 @@ import logging
 import os
 import stat
 
-import platforms
-from utils.format import Format
-from utils.utils import (step, Utils)
+import testrunner.platforms
+from testrunner.utils import Format
+from testrunner.utils import (step, Utils)
 
 logger = logging.getLogger('testrunner')
 
