@@ -1,8 +1,7 @@
 import os
-
 import yaml
 
-from utils.format import Format
+from testrunner.utils.format import Format
 
 
 class Constant:

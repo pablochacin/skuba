@@ -11,8 +11,8 @@ from threading import Thread
 import requests
 from timeout_decorator import timeout
 
-from utils.constants import Constant
-from utils.format import Format
+from testrunner.utils import Constant
+from testrunner.utils import Format
 
 logger = logging.getLogger('testrunner')
 

@@ -1,5 +1,6 @@
-from utils.utils import (Utils)
 from time import sleep
+from testrunner.utils import Utils
+
 
 class Kubectl:
 

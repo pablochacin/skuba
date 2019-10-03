@@ -6,15 +6,16 @@
 """
 
 import logging
+import os.path
 import sys
 from argparse import REMAINDER, ArgumentParser
 
-import platforms
-from skuba import Skuba
-from kubectl import Kubectl
-from tests import TestDriver
-from utils import BaseConfig, Logger, Utils
-from checks import Checker
+from testrunner.checks import Checker
+from testrunner.kubectl import Kubectl
+from testrunner.platforms import get_platform
+from testrunner.skuba import Skuba
+from testrunner.tests import TestDriver
+from testrunner.utils import BaseConfig, Logger, Utils
 
 __version__ = "0.0.3"
 
@@ -26,12 +27,12 @@ def info(options):
 
 
 def cleanup(options):
-    platforms.get_platform(options.conf, options.platform).cleanup()
+    get_platform(options.conf, options.platform).cleanup()
     Skuba.cleanup(options.conf)
 
 
 def provision(options):
-    platforms.get_platform(options.conf, options.platform).provision(
+    get_platform(options.conf, options.platform).provision(
         num_master=options.master_count,
         num_worker=options.worker_count)
 
@@ -61,7 +62,7 @@ def cluster_upgrade_plan(options):
 
 
 def get_logs(options):
-    platform_logging_errors = platforms.get_platform(
+    platform_logging_errors = get_platform(
         options.conf, options.platform).gather_logs()
 
     if platform_logging_errors:
@@ -106,7 +107,7 @@ def test(options):
 
 
 def ssh(options):
-    platforms.get_platform(options.conf, options.platform).ssh_run(
+    get_platform(options.conf, options.platform).ssh_run(
         role=options.role, nr=options.node, cmd=" ".join(options.cmd))
 
 
@@ -264,7 +265,7 @@ def main():
 
     options = parser.parse_args()
     try:
-        conf = BaseConfig(options.yaml_path)
+        conf = BaseConfig(os.path.abspath(options.yaml_path))
         Logger.config_logger(conf, level=options.log_level)
         options.conf = conf
         options.func(options)

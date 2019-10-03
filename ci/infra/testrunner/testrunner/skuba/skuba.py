@@ -2,10 +2,10 @@ import logging
 import os
 import time
 
-import platforms
-from checks import Checker
-from utils.format import Format
-from utils.utils import (step, Utils)
+from testrunner.checks import Checker
+import testrunner.platforms
+from testrunner.utils import Format
+from testrunner.utils import (step, Utils)
 
 logger = logging.getLogger('testrunner')
 

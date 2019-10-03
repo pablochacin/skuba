@@ -1,8 +1,8 @@
 import time
 
-import platforms
-from kubectl import Kubectl
-from utils.utils import Utils
+import testrunner.platforms
+from testrunner.kubectl import Kubectl
+from testrunner.utils import Utils
 
 
 class Check():

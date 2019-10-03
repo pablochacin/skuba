@@ -1,1 +1,1 @@
-from kubectl.kubectl import Kubectl
+from testrunner.kubectl.kubectl import Kubectl

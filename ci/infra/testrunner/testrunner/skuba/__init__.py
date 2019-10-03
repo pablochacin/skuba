@@ -1,1 +1,1 @@
-from skuba.skuba import Skuba
+from testrunner.skuba.skuba import Skuba

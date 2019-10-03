@@ -1,1 +1,1 @@
-from tests.driver import TestDriver
+from testrunner.tests.driver import TestDriver

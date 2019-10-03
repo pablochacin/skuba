@@ -2,8 +2,8 @@ import os
 import stat
 
 from timeout_decorator import timeout
-from platforms.terraform import Terraform
-from utils import Format
+from testrunner.platforms.terraform import Terraform
+from testrunner.utils import Format
 
 
 class Openstack(Terraform):

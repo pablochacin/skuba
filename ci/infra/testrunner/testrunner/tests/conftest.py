@@ -1,10 +1,9 @@
 import pytest
 
-import platforms
-from kubectl import Kubectl
-from skuba import Skuba
-from utils import BaseConfig
-from tests.utils import (check_pods_ready, wait)
+import testrunner.platforms
+from testrunner.kubectl.kubectl import Kubectl
+from testrunner.skuba.skuba import Skuba
+from testrunner.utils.utils import BaseConfig
 
 
 def pytest_addoption(parser):

@@ -1,1 +1,1 @@
-from checks.checks import Checker
+from testrunner.checks.checks import Checker
