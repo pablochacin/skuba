@@ -123,6 +123,7 @@ class Skuba:
 
         self.checker.check_node(role, nr, timeout=timeout)
 
+
     def join_nodes(self, masters=None, workers=None, timeout=None):
         if masters is None:
             masters = self.platform.get_num_nodes("master")
