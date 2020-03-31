@@ -16,6 +16,10 @@ class Kubectl:
         except Exception as ex:
             raise Exception("Error executing cmd {}".format(shell_cmd)) from ex
 
+    def get_kubeconfig(self):
+        path = "{cwd}/test-cluster/admin.conf".format(cwd=self.conf.workspace)
+        return path
+
     def get_node_names_by_role(self, role):
         """Returns a list of node names for a given role
         Uses selectors to get the nodes. Master nodes have the node-role.kubernetes.io/master="" label, while other
