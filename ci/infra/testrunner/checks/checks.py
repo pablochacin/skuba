@@ -89,6 +89,23 @@ class Checker:
             remaining = timeout-(int(time.time())-start)
             check(self.conf, self.platform, role, node, check_timeout=remaining, check_backoff=backoff)
 
+    def check_cluster(self, checks=None, stage=None, timeout=180, backoff=20):
+        if checks:
+            check_names = checks
+            checks = []
+            for name in check_names:
+                checks.append(_checks_by_name[name])
+        else:
+            if not stage:
+                raise ValueError("stage must be speficied")
+
+            checks = _checks_by_stage.get(stage, [])
+
+        start   = int(time.time())
+        for check in checks:
+            remaining = timeout-(int(time.time())-start)
+            check(self.conf, self.platform, check_timeout=remaining, check_backoff=backoff)
+
 
 @check(description="apiserver healthz check", roles=['master'])
 def check_apiserver_healthz(conf, platform, role, node):
