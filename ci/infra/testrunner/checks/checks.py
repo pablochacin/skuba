@@ -89,6 +89,23 @@ class Checker:
             remaining = timeout-(int(time.time())-start)
             check(self.conf, self.platform, role, node, check_timeout=remaining, check_backoff=backoff)
 
+    def check_cluster(self, checks=None, stage=None, timeout=180, backoff=20):
+        if checks:
+            check_names = checks
+            checks = []
+            for name in check_names:
+                checks.append(_checks_by_name[name])
+        else:
+            if not stage:
+                raise ValueError("stage must be speficied")
+
+            checks = _checks_by_stage.get(stage, [])
+
+        start   = int(time.time())
+        for check in checks:
+            remaining = timeout-(int(time.time())-start)
+            check(self.conf, self.platform, check_timeout=remaining, check_backoff=backoff)
+
 
 @check(description="apiserver healthz check", roles=['master'])
 def check_apiserver_healthz(conf, platform, role, node):
@@ -117,11 +134,9 @@ def check_node_ready(conf, platform, role, node):
     return kubectl.run_kubectl(cmd).find("Ready=True") != -1
 
 @check(description="check system pods ready")
-def check_system_pods_ready(conf, platform, role, node):
-    platform = platforms.get_platform(conf, platform)
-    node_name = platform.get_nodes_names(role)[node]
+def check_system_pods_ready(conf, platform):
     kubectl = Kubectl(conf, platform)
-    return check_pods_ready(kubectl, node=node_name, namespace="kube-system")
+    return check_pods_ready(kubectl, namespace="kube-system")
 
 
 def check_pods_ready(kubectl, namespace=None, pods=[], node=None, statuses=['Running', 'Succeeded']):
@@ -133,7 +148,7 @@ def check_pods_ready(kubectl, namespace=None, pods=[], node=None, statuses=['Run
 
     result = kubectl.run_kubectl(cmd)
     # get pods can return a list of items or a single pod
-    pod_list =  result.split(";")
+    pod_list = result.split(";")
     for name,status in [ pod.split(":") for pod in pod_list if pod is not ""]:
         if status not in statuses:
             return False
