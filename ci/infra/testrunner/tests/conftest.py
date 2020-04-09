@@ -28,8 +28,11 @@ def provision(request, platform):
         return
 
     def cleanup():
-        platform.gather_logs()
-        platform.cleanup()
+        # if platform was not allocated, gather_logs may fail. Ignore.
+        try:
+            platform.gather_logs()
+        finally:
+            platform.cleanup()
 
     request.addfinalizer(cleanup)
 
@@ -47,10 +50,11 @@ def bootstrap(request, provision, skuba):
 
 
 @pytest.fixture
-def deployment(request, bootstrap, skuba, kubectl):
-    if request.config.getoption("skip_setup") != 'deployed':
-        skuba.join_nodes()
+def deployment(request, provision, skuba, kubectl):
+    if request.config.getoption("skip_setup") == 'deployed':
+       return
 
+    skuba.cluster_deploy()
     wait(check_pods_ready,
          kubectl,
          namespace="kube-system",
@@ -102,4 +106,4 @@ def setup(request, platform, skuba):
 
     request.addfinalizer(cleanup)
 
-    platform.provision(num_master=3, num_worker=3)
+    platform.provision()
