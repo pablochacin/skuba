@@ -93,17 +93,3 @@ def kubectl(conf, target):
 def platform(conf, target):
     platform = platforms.get_platform(conf, target)
     return platform
-
-
-@pytest.fixture
-def setup(request, platform, skuba):
-    def cleanup():
-        # if platform was not allocated, gather_logs may fail. Ignore.
-        try:
-            platform.gather_logs()
-        finally:
-            platform.cleanup()
-
-    request.addfinalizer(cleanup)
-
-    platform.provision()
