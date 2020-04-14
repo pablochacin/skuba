@@ -1,25 +1,10 @@
 import pytest
 
-import testrunner.platforms
-from testrunner.kubectl.kubectl import Kubectl
-from testrunner.skuba.skuba import Skuba
-from testrunner.utils.utils import BaseConfig
-
-
-def pytest_addoption(parser):
-    """
-    Adds the option pytest option list.
-    This options can be used to initilize fixtures.
-    """
-    parser.addoption("--vars", action="store", help="vars yaml")
-    parser.addoption("--platform", action="store", help="target platform")
-    parser.addoption("--skip-setup",
-                     choices=['provisioned', 'bootstrapped', 'deployed'],
-                     help="Skip the given setup step.\n"
-                          "'provisioned' For when you have already provisioned the nodes.\n"
-                          "'bootstrapped' For when you have already bootstrapped the cluster.\n"
-                          "'deployed' For when you already have a fully deployed cluster.")
-
+from testrunner.platforms import get_platform
+from testrunner.kubectl import Kubectl
+from testrunner.skuba import Skuba
+from testrunner.utils import BaseConfig
+from testrunner.test.utils import (check_pods_ready, wait)
 
 @pytest.fixture
 def provision(request, platform):
@@ -86,7 +71,7 @@ def kubectl(conf):
 
 @pytest.fixture
 def platform(conf, target):
-    platform = platforms.get_platform(conf, target)
+    platform = get_platform(conf, target)
     return platform
 
 

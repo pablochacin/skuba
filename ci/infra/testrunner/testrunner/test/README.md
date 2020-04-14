@@ -105,7 +105,7 @@ tests
 The command below will exectute the `test_add_worker` function defined in `tests/test_workers.py`:
 
 ```
-testrunner -v vars/vars.yaml test --module tests --suite core_tests.py --test test_add_worker
+testrunner -v vars/vars.yaml test --path tests --suite core_tests.py --test test_add_worker
 ```
 
 

@@ -1,6 +1,6 @@
 import pytest
 
-from tests.utils import setup_kubernetes_version
+from testrunner.tests.utils import setup_kubernetes_version
 
 
 @pytest.mark.disruptive

@@ -3,7 +3,7 @@ import yaml
 import pytest
 import re
 
-from tests.utils import get_skuba_configuration_dict, replace_skuba_config
+from testrunner.tests.utils import get_skuba_configuration_dict, replace_skuba_config
 
 
 def addons_up_to_date(skuba):

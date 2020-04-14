@@ -108,7 +108,7 @@ def cluster_check(options):
 
 def test(options):
     test_driver = TestDriver(options.conf, options.platform)
-    test_driver.run(test_suite=options.test_suite, test=options.test,
+    test_driver.run(options.path, test_suite=options.test_suite, test=options.test,
                     verbose=options.verbose, collect=options.collect, skip_setup=options.skip_setup,
                     mark=options.mark, traceback=options.traceback, junit=options.junit)
 
@@ -239,6 +239,7 @@ def main():
     test_args = ArgumentParser(add_help=False)
     test_args.add_argument("-f", "--filter", dest="mark", help="Filter the tests based on markers")
     test_args.add_argument("-j", "--junit", help="Name of the xml file to record the results to.")
+    test_args.add_argument("-p", "--path", dest="path", help="folder with the tests. Required", required=True)
     test_args.add_argument("-s", "--suite", dest="test_suite", help="test file name")
     test_args.add_argument("-t", "--test", dest="test", help="test to execute")
     test_args.add_argument("-l", "--list", dest="collect", action="store_true", default=False,

@@ -532,8 +532,8 @@ optional arguments:
                         Filter the tests based on markers
   -j JUNIT, --junit JUNIT
                         Name of the xml file to record the results to.
-  -m MODULE, --module MODULE
-                        folder with the tests
+  -p PATH, --path PATH
+                        path to test directory
   -s TEST_SUITE, --suite TEST_SUITE
                         test file name
   -t TEST, --test TEST  test to execute

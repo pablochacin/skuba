@@ -4,7 +4,7 @@ import time
 
 import pytest
 
-from tests.utils import wait
+from testrunner.tests.utils import wait
 
 logger = logging.getLogger("testrunner")
 

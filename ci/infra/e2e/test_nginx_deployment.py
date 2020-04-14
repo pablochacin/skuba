@@ -1,6 +1,6 @@
 import pytest
 import requests
-
+from testrunner.test.fixtures import *
 
 @pytest.mark.pr
 def test_nginx_deployment(deployment, platform, skuba, kubectl):

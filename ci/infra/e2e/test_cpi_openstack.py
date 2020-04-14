@@ -1,9 +1,9 @@
 import pytest
 import os
-import platforms
-from skuba import Skuba
-from utils import BaseConfig
-from tests.utils import (check_pods_ready, wait)
+import testrunner.platforms
+from testrunner.skuba import Skuba
+from testruner.utils import BaseConfig
+from testruner.tests.utils import (check_pods_ready, wait)
 
 CINDER_YAML = '''
 apiVersion: storage.k8s.io/v1
@@ -155,7 +155,7 @@ def test_node_join_cpi_openstack_cluster(skuba, kubectl):
 @pytest.mark.openstack
 @pytest.mark.run(order=4)
 def test_create_cinder_storage(kubectl, skuba):
-        # TODO: result of action is successful  
+        # TODO: result of action is successful
         kubectl.run_kubectl(" apply -f -", stdin=CINDER_YAML.encode())
 
 

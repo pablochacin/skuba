@@ -1,5 +1,5 @@
 import pytest
-from tests.utils import wait
+from testrunner.tests.utils import wait
 
 
 @pytest.mark.disruptive

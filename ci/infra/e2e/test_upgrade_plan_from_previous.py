@@ -1,6 +1,12 @@
 import pytest
 
-from tests.utils import setup_kubernetes_version, PREVIOUS_VERSION, CURRENT_VERSION
+from testrunner.tests.utils import (
+    check_pods_ready,
+    CURRENT_VERSION,
+    PREVIOUS_VERSION,
+    setup_kubernetes_version,
+    wait
+)
 
 
 @pytest.mark.disruptive

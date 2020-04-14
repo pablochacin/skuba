@@ -4,7 +4,7 @@ import textwrap
 
 import pytest
 
-from tests.utils import (check_pods_ready, wait)
+from testrunner.tests.utils import (check_pods_ready, wait)
 
 logger = logging.getLogger("testrunner")
 

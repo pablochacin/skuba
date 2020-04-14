@@ -1,6 +1,11 @@
 import pytest
 
-from tests.utils import PREVIOUS_VERSION, setup_kubernetes_version, node_is_ready, node_is_upgraded
+from testrunner.tests.utils import (
+    node_is_ready,
+    node_is_upgraded,
+    PREVIOUS_VERSION,
+    setup_kubernetes_version
+)
 
 
 @pytest.mark.disruptive

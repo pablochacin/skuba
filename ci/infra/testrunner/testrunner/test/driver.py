@@ -19,7 +19,7 @@ class TestDriver:
         self.conf = conf
         self.platform = platform
 
-    def run(self, module=None, test_suite=None,
+    def run(self, path, test_suite=None,
             test=None, verbose=False, collect=False,
             skip_setup=None, mark=None, junit=None, traceback="short"):
         opts = []
@@ -53,23 +53,23 @@ class TestDriver:
 
         opts.append(f'--tb={traceback}')
 
-        test_path = module if module is not None else "tests"
-
+        path = os.path.abspath(path)
         if test_suite:
             if not test_suite.endswith(".py"):
                 raise ValueError("Test suite must be a python file")
-            test_path = os.path.join(test_path, test_suite)
+            path = os.path.join(path, test_suite)
 
         if test:
             if not test_suite:
                 raise ValueError("Test suite is required for selecting a test")
-            test_path = "{}::{}".format(test_path, test)
+            path = "{}::{}".format(path, test)
 
-        # Path must be the last argument
-        opts.append(test_path)
+        # add path to test module to allow pytest finding contest.py and
+        # loading the testrunner plugins
+        opts.append(TESTRUNNER_DIR)
 
-        # Before running the tests, switch to the directory of the testrunner.py
-        os.chdir(TESTRUNNER_DIR)
+        # Path to tests must be the last argument
+        opts.append(path)
 
         result = pytest.main(args=opts)
 
