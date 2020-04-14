@@ -9,12 +9,19 @@ import logging
 import os.path
 import sys
 from argparse import REMAINDER, ArgumentParser
+from pathlib import Path
+
+# if executed without installing the package
+if not __package__:
+    package_dir = os.path.dirname(os.path.realpath(__file__))
+    sys.path.append(str(Path(package_dir).parent))
+    import testrunner
 
 from testrunner.checks import Checker
 from testrunner.kubectl import Kubectl
 from testrunner.platforms import get_platform
 from testrunner.skuba import Skuba
-from testrunner.tests import TestDriver
+from testrunner.test import TestDriver
 from testrunner.utils import BaseConfig, Logger, Utils
 
 __version__ = "0.0.3"
@@ -101,7 +108,7 @@ def cluster_check(options):
 
 def test(options):
     test_driver = TestDriver(options.conf, options.platform)
-    test_driver.run(module=options.module, test_suite=options.test_suite, test=options.test,
+    test_driver.run(test_suite=options.test_suite, test=options.test,
                     verbose=options.verbose, collect=options.collect, skip_setup=options.skip_setup,
                     mark=options.mark, traceback=options.traceback, junit=options.junit)
 
@@ -232,7 +239,6 @@ def main():
     test_args = ArgumentParser(add_help=False)
     test_args.add_argument("-f", "--filter", dest="mark", help="Filter the tests based on markers")
     test_args.add_argument("-j", "--junit", help="Name of the xml file to record the results to.")
-    test_args.add_argument("-m", "--module", dest="module", help="folder with the tests")
     test_args.add_argument("-s", "--suite", dest="test_suite", help="test file name")
     test_args.add_argument("-t", "--test", dest="test", help="test to execute")
     test_args.add_argument("-l", "--list", dest="collect", action="store_true", default=False,

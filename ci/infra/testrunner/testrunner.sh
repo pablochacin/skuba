@@ -28,5 +28,5 @@ setup_python_env() {
 }
 
 setup_python_env
-python -m testrunner.testrunner "$@"
+python $SDIR/testrunner/runner.py "$@"
 deactivate
