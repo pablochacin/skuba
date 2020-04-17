@@ -1,6 +1,6 @@
 import time
 
-import testrunner.platforms
+from testrunner.platforms import get_platform
 from testrunner.kubectl import Kubectl
 from testrunner.utils import Utils
 
@@ -101,7 +101,6 @@ class Checker:
         return checks
 
     def check_node(self, role, node, checks=None, stage=None, timeout=180, backoff=20):
-
         #Prevent defaults to be accidentally overridden by callers with None
         if timeout is None:
             timeout = 180
@@ -142,14 +141,14 @@ class Checker:
 
 @check(description="apiserver healthz check", scope="node", roles=['master'])
 def check_apiserver_healthz(conf, platform, role, node):
-     platform = platforms.get_platform(conf, platform)
+     platform = get_platform(conf, platform)
      cmd =   'curl -Ls --insecure https://localhost:6443/healthz'
      output = platform.ssh_run(role, node, cmd)
      return output.find("ok") > -1
 
 @check(description="etcd health check", scope="node", roles=['master'])
 def check_etcd_health(conf, platform, role, node):
-    platform = platforms.get_platform(conf, platform)
+    platform = get_platform(conf, platform)
     cmd = ('sudo curl -Ls --cacert /etc/kubernetes/pki/etcd/ca.crt '
            '--key /etc/kubernetes/pki/etcd/server.key '
            '--cert /etc/kubernetes/pki/etcd/server.crt '
@@ -159,7 +158,7 @@ def check_etcd_health(conf, platform, role, node):
 
 @check(description="check node is ready", scope="node", roles=["master", "worker"], stages=["joined"])
 def check_node_ready(conf, platform, role, node):
-    platform = platforms.get_platform(conf, platform)
+    platform = get_platform(conf, platform)
     node_name = platform.get_nodes_names(role)[node]
     cmd = ("get nodes {} -o jsonpath='{{range @.status.conditions[*]}}"
            "{{@.type}}={{@.status}};{{end}}'").format(node_name)

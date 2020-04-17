@@ -3,7 +3,7 @@ import os
 import time
 
 from testrunner.checks import Checker
-import testrunner.platforms
+from testrunner.platforms import  get_platform
 from testrunner.utils import Format
 from testrunner.utils import (step, Utils)
 
@@ -16,7 +16,7 @@ class Skuba:
         self.conf = conf
         self.binpath = self.conf.skuba.binpath
         self.utils = Utils(self.conf)
-        self.platform = platforms.get_platform(conf, platform)
+        self.platform = get_platform(conf, platform)
         self.cwd = "{}/test-cluster".format(self.conf.workspace)
         self.utils.setup_ssh()
         self.checker = Checker(conf, platform)
